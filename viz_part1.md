@@ -320,4 +320,4 @@ weather_df %>%
 <img src="viz_part1_files/figure-gfm/unnamed-chunk-15-1.png" width="90%" />
 
 \#What if I wanted densties for tmin and tmax simultaneously?
-\#\#`{r} ##weather_df %>% #  pivot_longer( #    tmax:tmin, #    names_to = "observation", #    values_to = "temmperatures" #) %>%  #ggplot(aes(x=temperatures, fill = observation)) +  #  geom_density(alpha =0.5) + #  facet_grid(.~name)`
+\#`{r} #weather_df %>% #  pivot_longer( #    tmax:tmin, #    names_to = "observation", #    values_to = "temmperatures" #) %>%  #ggplot(aes(x=temperatures, fill = observation)) +  #  geom_density(alpha =0.5) + #  facet_grid(.~name) #`
