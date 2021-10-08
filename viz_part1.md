@@ -159,3 +159,148 @@ weather_df %>%
     ## Warning: Removed 90 rows containing missing values (geom_point).
 
 <img src="viz_part1_files/figure-gfm/unnamed-chunk-7-1.png" width="90%" />
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color = name))+
+  geom_point(alpha = 0.3) +
+  labs(
+    title = "Temperature Plot",
+    x = "Minimum Daily Temperature (C)",
+    y = "Maximum Daily Temperature (C)",
+    caption = "data from RNOA package"
+  ) + 
+  viridis::scale_color_viridis(
+    name = "location",
+    discrete = TRUE
+  )
+```
+
+    ## Warning: Removed 15 rows containing missing values (geom_point).
+
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-8-1.png" width="90%" />
+
+\#Themes
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color = name))+
+  geom_point(alpha = 0.3) +
+  labs(
+    title = "Temperature Plot",
+    x = "Minimum Daily Temperature (C)",
+    y = "Maximum Daily Temperature (C)",
+    caption = "data from RNOA package"
+  ) + 
+  viridis::scale_color_viridis(
+    name = "location",
+    discrete = TRUE
+  ) +
+  theme(legend.position = "bottom")
+```
+
+    ## Warning: Removed 15 rows containing missing values (geom_point).
+
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-9-1.png" width="90%" />
+
+\#Themes
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color = name))+
+  geom_point(alpha = 0.3) +
+  labs(
+    title = "Temperature Plot",
+    x = "Minimum Daily Temperature (C)",
+    y = "Maximum Daily Temperature (C)",
+    caption = "data from RNOA package"
+  ) + 
+  viridis::scale_color_viridis(
+    name = "location",
+    discrete = TRUE
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+    ## Warning: Removed 15 rows containing missing values (geom_point).
+
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-10-1.png" width="90%" />
+
+``` r
+library(tidyverse)
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.full = "viridis"
+)
+
+scale_colour_discrete = scale_color_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+```
+
+``` r
+central_park =
+  weather_df %>% 
+  filter (name == "CentralPark_NY")
+
+waikiki =
+  weather_df %>% 
+  filter (name == "Waikiki_HA")
+
+ggplot(data = waikiki, aes(x = date, y =tmax, color = name)) +
+  geom_point() +
+  geom_line(data = central_park)
+```
+
+    ## Warning: Removed 3 rows containing missing values (geom_point).
+
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-12-1.png" width="90%" />
+
+## ‘patchwork’
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin, fill = name)) +
+  geom_density(alpha = 0.5) +
+  facet_grid(.~ name)
+```
+
+    ## Warning: Removed 15 rows containing non-finite values (stat_density).
+
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-13-1.png" width="90%" />
+
+``` r
+tmax_tmin_p =
+  weather_df %>% 
+  ggplot(aes(x=tmin, y = tmax, color = name)) +
+  geom_point(alpha = 0.5) +
+  theme(legend.position = "none")
+
+prcp_dens_p = 
+  weather_df %>% 
+  filter(prcp > 0) %>% 
+  ggplot(aes(x = prcp, fill = name)) +
+  geom_density(alpha = 0.5) +
+  theme(legend.position = "none")
+
+tmax_date_p = 
+  weather_df %>% 
+  ggplot(aes(x = date, y= tmax, color = name)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  theme(legend.position = "none")
+
+(tmax_tmin_p + prcp_dens_p) / tmax_date_p
+```
+
+    ## Warning: Removed 15 rows containing missing values (geom_point).
+
+    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+
+    ## Warning: Removed 3 rows containing non-finite values (stat_smooth).
+
+    ## Warning: Removed 3 rows containing missing values (geom_point).
+
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-14-1.png" width="90%" />
