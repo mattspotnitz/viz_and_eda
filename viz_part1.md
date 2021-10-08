@@ -17,6 +17,7 @@ library(tidyverse)
     ## x dplyr::lag()    masks stats::lag()
 
 ``` r
+library(patchwork)
 knitr::opts_chunk$set(
   fig.width = 6,
   fig.asp = 0.6,
@@ -101,6 +102,7 @@ weather_df %>%
     ## Warning: Removed 3 rows containing missing values (geom_point).
 
 <img src="viz_part1_files/figure-gfm/unnamed-chunk-4-1.png" width="90%" />
+\#Remember this plot
 
 ``` r
 weather_df %>% 
@@ -111,13 +113,49 @@ weather_df %>%
     ## Warning: Removed 15 rows containing missing values (geom_point).
 
 <img src="viz_part1_files/figure-gfm/unnamed-chunk-5-1.png" width="90%" />
+\#Labels
 
 ``` r
 weather_df %>% 
   ggplot(aes(x=tmin, y=tmax, color = name))+
-  geom_point(alpha = 0.3)
+  geom_point(alpha = 0.3) +
+  labs(
+    title = "Temperature Plot",
+    x = "Minimum Daily Temperature (C)",
+    y = "Maximum Daily Temperature (C)",
+    caption = "data from RNOA package"
+  )
 ```
 
     ## Warning: Removed 15 rows containing missing values (geom_point).
 
 <img src="viz_part1_files/figure-gfm/unnamed-chunk-6-1.png" width="90%" />
+
+\#Scales
+
+``` r
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color = name))+
+  geom_point(alpha = 0.3) +
+  labs(
+    title = "Temperature Plot",
+    x = "Minimum Daily Temperature (C)",
+    y = "Maximum Daily Temperature (C)",
+    caption = "data from RNOA package"
+  ) + 
+  scale_x_continuous(
+    breaks = c(-15, 0, 15),
+    labels = c("-15 º C", "0", "15")
+  ) +
+  scale_y_continuous(
+    trans = "sqrt"
+  )
+```
+
+    ## Warning in self$trans$transform(x): NaNs produced
+
+    ## Warning: Transformation introduced infinite values in continuous y-axis
+
+    ## Warning: Removed 90 rows containing missing values (geom_point).
+
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-7-1.png" width="90%" />

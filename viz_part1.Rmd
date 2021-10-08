@@ -4,6 +4,7 @@ output: github_document
 ---
 ```{r}
 library(tidyverse)
+library(patchwork)
 knitr::opts_chunk$set(
   fig.width = 6,
   fig.asp = 0.6,
@@ -46,14 +47,43 @@ weather_df %>%
   geom_smooth(se=FALSE) +
   facet_grid(.~ name)
 ```
+#Remember this plot
 
 ```{r}
 weather_df %>% 
   ggplot(aes(x=tmin, y=tmax, color = name))+
   geom_point(alpha = 0.3)
 ```
+#Labels
+
 ```{r, figwidth = 12}
 weather_df %>% 
   ggplot(aes(x=tmin, y=tmax, color = name))+
-  geom_point(alpha = 0.3)
+  geom_point(alpha = 0.3) +
+  labs(
+    title = "Temperature Plot",
+    x = "Minimum Daily Temperature (C)",
+    y = "Maximum Daily Temperature (C)",
+    caption = "data from RNOA package"
+  )
+```
+
+#Scales
+```{r, figwidth = 12}
+weather_df %>% 
+  ggplot(aes(x=tmin, y=tmax, color = name))+
+  geom_point(alpha = 0.3) +
+  labs(
+    title = "Temperature Plot",
+    x = "Minimum Daily Temperature (C)",
+    y = "Maximum Daily Temperature (C)",
+    caption = "data from RNOA package"
+  ) + 
+  scale_x_continuous(
+    breaks = c(-15, 0, 15),
+    labels = c("-15 º C", "0", "15")
+  ) +
+  scale_y_continuous(
+    trans = "sqrt"
+  )
 ```
