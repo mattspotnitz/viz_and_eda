@@ -304,3 +304,20 @@ tmax_date_p =
     ## Warning: Removed 3 rows containing missing values (geom_point).
 
 <img src="viz_part1_files/figure-gfm/unnamed-chunk-14-1.png" width="90%" />
+
+``` r
+weather_df %>% 
+  mutate(
+    name = factor(name),
+    name = forcats::fct_relevel(name, c("Waikiki_HA"))
+  ) %>% 
+  ggplot(aes(x=name, y= tmax, fill = name)) +
+  geom_violin(alpha = 0.5)
+```
+
+    ## Warning: Removed 3 rows containing non-finite values (stat_ydensity).
+
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-15-1.png" width="90%" />
+
+\#What if I wanted densties for tmin and tmax simultaneously?
+\#\#`{r} ##weather_df %>% #  pivot_longer( #    tmax:tmin, #    names_to = "observation", #    values_to = "temmperatures" #) %>%  #ggplot(aes(x=temperatures, fill = observation)) +  #  geom_density(alpha =0.5) + #  facet_grid(.~name)`
